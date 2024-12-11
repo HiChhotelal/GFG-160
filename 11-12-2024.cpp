@@ -1,23 +1,26 @@
 class Solution {
   public:
-    int minRemoval(vector<vector<int>> &intervals) {
+    void mergeArrays(vector<int>& a, vector<int>& b) {
         // code here
-        int n = intervals.size();
-        
-        sort(intervals.begin(), intervals.end(), [](const vector<int> &a , const vector<int> &b){
-            return a[1] < b[1];
-        });
-        
-        int count = 1;
-        int lastendTime = intervals[0][1];
-        
-        for(int i = 1; i < n; i++){
-            if(intervals[i][0] >= lastendTime){
-                count++;
-                lastendTime = intervals[i][1];
+
+        int n = a.size();
+        int m = b.size();
+
+        int i = n - 1;
+        int j = 0;
+
+        while(i >= 0 && j < m){ // o(n + m)
+
+            if(a[i] > b[j]){
+                swap(a[i],b[j]);
+                i--;
+                j++;
+            }else{
+                break;
             }
         }
-        
-        return n - count;
+
+        sort(a.begin(), a.end()); // n*log(n)
+        sort(b.begin(), b.end()); // n*log(n)
     }
 };
